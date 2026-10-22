@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Level 2 Exam Prep Master</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- TOP HEADER -->
+    <header class="bg-slate-800 border-b border-slate-700 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('main-menu')">
+                <div class="bg-gradient-to-tr from-indigo-500 to-purple-600 text-white p-2.5 rounded-xl shadow-lg">
+                    <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-xl tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-300">
+                        ESL Prep Master
+                    </h1>
+                    <p class="text-xs text-slate-400 font-medium">Beginner Level 2 Exam Suite</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="bg-slate-700/60 px-3.5 py-1.5 rounded-full border border-slate-600 flex items-center space-x-2">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span id="global-score" class="font-bold text-amber-300 text-sm">0 XP</span>
+                </div>
+                <button onclick="showScreen('main-menu')" class="bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 rounded-lg text-sm font-medium transition">
+                    <i class="fa-solid fa-house mr-1"></i> Menu
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-5xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- SCREEN: MAIN MENU -->
+        <div id="main-menu" class="screen space-y-8">
+            <div class="text-center space-y-2">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white">Choose Exam Training Mode</h2>
+                <p class="text-slate-400 max-w-xl mx-auto text-sm md:text-base">
+                    Master all 21 grammar topics, test your vocabulary from the Alias printable cards, and practice the dictation story!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Mode 1: Grammar Quiz -->
+                <div onclick="startGrammarQuiz()" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-indigo-500 rounded-2xl p-6 transition cursor-pointer transform hover:-translate-y-1 shadow-xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center text-2xl group-hover:bg-indigo-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-list-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">Grammar Quest</h3>
+                            <p class="text-slate-400 text-sm">Practice 21 grammar topics with interactive multiple-choice questions.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center text-indigo-400 font-semibold text-sm">
+                        <span>Start Test</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Mode 2: Vocabulary Flashcards -->
+                <div onclick="startFlashcards()" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-purple-500 rounded-2xl p-6 transition cursor-pointer transform hover:-translate-y-1 shadow-xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-purple-500/20 text-purple-400 rounded-xl flex items-center justify-center text-2xl group-hover:bg-purple-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">Alias Flashcards</h3>
+                            <p class="text-slate-400 text-sm">Train with all vocabulary words from the generated Alias game sheets.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center text-purple-400 font-semibold text-sm">
+                        <span>Review Words</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Mode 3: Dictation Practice -->
+                <div onclick="startDictation()" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-emerald-500 rounded-2xl p-6 transition cursor-pointer transform hover:-translate-y-1 shadow-xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center text-2xl group-hover:bg-emerald-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-pen-nib"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">Dictation Challenge</h3>
+                            <p class="text-slate-400 text-sm">Listen and complete sentences from "A Day in Peter's Life".</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex items-center text-emerald-400 font-semibold text-sm">
+                        <span>Practice Writing</span>
+                        <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+                    </div>
+                </div>
+
+                <!-- Mode 4: Grammar Topic Cheatsheet -->
+                <div onclick="showCheatsheet()" class="bg-slate-800 hover:bg-slate-750 border border-slate-700 hover:border-amber-500 rounded-2xl p-6 transition cursor-pointer transform hover:-translate-y-1 shadow-xl flex flex-col justify-between group md:col-span-2 lg:col-span-3">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-2xl group-hover:bg-amber-500 group-hover:text-white transition shrink-0">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-1">21 Topics Quick Cheatsheet</h3>
+                            <p class="text-slate-400 text-sm">Review all rules and examples before taking the exam.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: GRAMMAR QUIZ -->
+        <div id="grammar-quiz" class="screen hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div>
+                    <span id="quiz-topic" class="text-xs font-bold uppercase tracking-wider text-indigo-400">Topic 1/21</span>
+                    <h3 id="quiz-title" class="text-lg font-bold text-white">Grammar Topic</h3>
+                </div>
+                <div class="text-right">
+                    <span id="quiz-progress" class="text-sm text-slate-400">Question 1 of 21</span>
+                    <div class="w-32 bg-slate-700 h-2 rounded-full mt-1 overflow-hidden">
+                        <div id="quiz-progress-bar" class="bg-indigo-500 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+                <div class="space-y-2">
+                    <div class="text-slate-400 text-xs font-semibold uppercase tracking-wider">Fill in the blank:</div>
+                    <p id="quiz-question" class="text-xl md:text-2xl font-semibold text-white leading-relaxed">Loading question...</p>
+                </div>
+
+                <div id="quiz-options" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Options populated via JS -->
+                </div>
+
+                <div id="quiz-explanation" class="hidden p-4 rounded-xl border text-sm space-y-1">
+                    <!-- Explanation displayed after answering -->
+                </div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-slate-700">
+                    <button onclick="showScreen('main-menu')" class="text-slate-400 hover:text-slate-200 text-sm font-medium">
+                        Quit
+                    </button>
+                    <button id="quiz-next-btn" onclick="nextGrammarQuestion()" class="hidden bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center space-x-2">
+                        <span>Next Question</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: FLASHCARDS -->
+        <div id="flashcards" class="screen hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Vocabulary Flashcards</h3>
+                    <p class="text-xs text-slate-400">Tap card to flip • Master all printable words</p>
+                </div>
+                <span id="flashcard-counter" class="text-sm font-bold text-purple-400">1 / 60</span>
+            </div>
+
+            <!-- Card Container -->
+            <div class="max-w-md mx-auto h-80">
+                <div id="flip-card-el" onclick="toggleCardFlip()" class="flip-card w-full h-full cursor-pointer">
+                    <div class="flip-card-inner shadow-2xl">
+                        <!-- Front -->
+                        <div class="flip-card-front bg-slate-800 border-2 border-purple-500/40 p-6 flex flex-col justify-between items-center">
+                            <span class="text-xs font-semibold text-slate-400 tracking-wider uppercase">English Word</span>
+                            <div class="text-center space-y-3">
+                                <div id="card-icon" class="text-6xl text-purple-400 mb-2">
+                                    <i class="fa-solid fa-font"></i>
+                                </div>
+                                <h2 id="card-word" class="text-3xl font-extrabold text-white">Word</h2>
+                            </div>
+                            <span class="text-xs text-slate-500 flex items-center">
+                                <i class="fa-solid fa-rotate mr-1"></i> Click to flip for translation & clues
+                            </span>
+                        </div>
+                        <!-- Back -->
+                        <div class="flip-card-back bg-gradient-to-br from-purple-900 to-slate-800 border-2 border-purple-400 p-6 flex flex-col justify-between items-center">
+                            <span class="text-xs font-semibold text-purple-300 tracking-wider uppercase">Translation & Hint</span>
+                            <div class="text-center space-y-3">
+                                <h3 id="card-translation" class="text-2xl font-bold text-amber-300">Перевод</h3>
+                                <p id="card-category" class="text-xs bg-purple-950 text-purple-200 px-3 py-1 rounded-full inline-block border border-purple-800">Category</p>
+                                <p id="card-example" class="text-sm text-slate-300 italic px-2">"Example sentence goes here"</p>
+                            </div>
+                            <button onclick="event.stopPropagation(); speakWord();" class="text-xs text-purple-300 bg-purple-800/50 hover:bg-purple-800 px-3 py-1.5 rounded-lg transition flex items-center space-x-1">
+                                <i class="fa-solid fa-volume-high"></i>
+                                <span>Pronounce</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex justify-center items-center space-x-4 pt-2">
+                <button onclick="prevCard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2.5 rounded-xl border border-slate-700 font-semibold transition">
+                    <i class="fa-solid fa-chevron-left mr-2"></i> Prev
+                </button>
+                <button onclick="shuffleCards()" class="bg-slate-800 hover:bg-slate-700 text-purple-400 px-4 py-2.5 rounded-xl border border-slate-700 font-semibold transition" title="Shuffle">
+                    <i class="fa-solid fa-shuffle"></i>
+                </button>
+                <button onclick="nextCard()" class="bg-purple-600 hover:bg-purple-500 text-white px-5 py-2.5 rounded-xl font-semibold transition">
+                    Next <i class="fa-solid fa-chevron-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- SCREEN: DICTATION -->
+        <div id="dictation" class="screen hidden space-y-6">
+            <div class="bg-slate-800 p-4 rounded-xl border border-slate-700 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-bold text-white">Dictation Practice</h3>
+                    <p class="text-xs text-slate-400">Fill in missing words from "A Day in Peter's Life"</p>
+                </div>
+                <div class="text-right">
+                    <span id="dictation-step" class="text-sm font-bold text-emerald-400">Sentence 1/10</span>
+                </div>
+            </div>
+
+            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl">
+                <div class="flex items-center space-x-3">
+                    <button onclick="speakDictationSentence()" class="bg-emerald-600 hover:bg-emerald-500 text-white p-3.5 rounded-xl transition shadow-lg shrink-0" title="Listen Sentence">
+                        <i class="fa-solid fa-volume-high text-xl"></i>
+                    </button>
+                    <div>
+                        <p class="text-xs text-slate-400 font-semibold uppercase">Listen & Type missing word(s):</p>
+                        <p id="dictation-hint" class="text-sm text-slate-300 italic">Click speaker to listen!</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/80 p-5 rounded-xl border border-slate-700">
+                    <p id="dictation-sentence" class="text-lg md:text-xl font-medium text-slate-200 leading-relaxed">
+                        Loading sentence...
+                    </p>
+                </div>
+
+                <div class="space-y-3">
+                    <label class="block text-xs font-semibold text-slate-400 uppercase">Your Answer:</label>
+                    <div class="flex space-x-2">
+                        <input type="text" id="dictation-input" placeholder="Type the missing word here..." class="w-full bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-xl px-4 py-3 text-white outline-none transition">
+                        <button onclick="checkDictationAnswer()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-3 rounded-xl transition shrink-0">
+                            Check
+                        </button>
+                    </div>
+                </div>
+
+                <div id="dictation-feedback" class="hidden p-4 rounded-xl border text-sm font-semibold"></div>
+
+                <div class="flex justify-between items-center pt-4 border-t border-slate-700">
+                    <button onclick="showScreen('main-menu')" class="text-slate-400 hover:text-slate-200 text-sm font-medium">
+                        Back to Menu
+                    </button>
+                    <button id="dictation-next-btn" onclick="nextDictationSentence()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2.5 rounded-xl font-bold transition">
+                        Next Sentence <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCREEN: CHEATSHEET -->
+        <div id="cheatsheet" class="screen hidden space-y-6">
+            <div class="flex justify-between items-center bg-slate-800 p-4 rounded-xl border border-slate-700">
+                <div>
+                    <h3 class="text-lg font-bold text-white">21 Exam Grammar Topics</h3>
+                    <p class="text-xs text-slate-400">Quick summary & examples for all topics</p>
+                </div>
+                <button onclick="showScreen('main-menu')" class="bg-slate-700 text-slate-200 hover:bg-slate-600 px-3 py-1.5 rounded-lg text-sm font-medium transition">
+                    Close
+                </button>
+            </div>
+
+            <div id="cheatsheet-list" class="space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar pr-2">
+                <!-- Topics inserted via JS -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-800/60 border-t border-slate-800 py-4 text-center text-xs text-slate-500">
+        ESL Exam Preparation System • Beginner Level 2 • Designed for Interactive Learning
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- GLOBAL STATE ---
+        let totalXP = 0;
+
+        // --- DATA: 21 GRAMMAR TOPICS + QUIZ QUESTIONS ---
+        const grammarData = [
+            { id: 1, title: "To Be (Present Tense)", example: "Are you a happy student? / Yes, I am.", question: "___ you a student at this school?", options: ["Are", "Is", "Do", "Does"], answer: 0, exp: "With 'you', we use 'Are' for the verb To Be in Present Simple." },
+            { id: 2, title: "To Be (Past Tense)", example: "Were you at home yesterday? / No, I was not.", question: "Peter ___ at home yesterday evening.", options: ["was", "were", "is", "did"], answer: 0, exp: "Past tense of To Be for 'he/Peter' is 'was'." },
+            { id: 3, title: "Present Simple (Do/Does)", example: "Does she use a hairdryer every morning?", question: "___ she clean her room every day?", options: ["Does", "Do", "Is", "Has"], answer: 0, exp: "Use 'Does' for third person singular (she/he/it) questions in Present Simple." },
+            { id: 4, title: "Question Words in Present Simple", example: "Where do you live?", question: "___ do you usually eat for breakfast?", options: ["What", "Where", "Who", "When"], answer: 0, exp: "'What' asks about objects or food." },
+            { id: 5, title: "Modal Verb: Can", example: "Peter can speak English very well.", question: "She ___ drive a car, but she prefers walking.", options: ["can", "may", "wants", "is"], answer: 0, exp: "'Can' expresses ability to do something." },
+            { id: 6, title: "Modal Verb: May", example: "May I open the window, please?", question: "___ I open the door, please?", options: ["May", "Do", "Am", "Will"], answer: 0, exp: "'May' is used for asking permission politely." },
+            { id: 7, title: "Want to / Like to", example: "Do you want to play football with us?", question: "He likes ___ to music in his bedroom.", options: ["to listen", "listen", "listened", "listens"], answer: 0, exp: "After 'like/want', use the infinitive with 'to' (to listen)." },
+            { id: 8, title: "Imperatives (Commands)", example: "Open the door, please.", question: "___ open the window! It is very cold outside.", options: ["Don't", "Not", "Doesn't", "Aren't"], answer: 0, exp: "Negative imperative begins with 'Don't'." },
+            { id: 9, title: "Past Simple: Regular Verbs (-ed)", example: "We played football on Monday.", question: "Yesterday, they ___ English together.", options: ["studied", "study", "studying", "will study"], answer: 0, exp: "Regular verbs in Past Simple add '-ed' (study -> studied)." },
+            { id: 10, title: "Past Simple: Irregular Verbs", example: "He bought a new bicycle yesterday.", question: "Peter ___ a new bicycle last week.", options: ["bought", "buyed", "buys", "buying"], answer: 0, exp: "Past tense of 'buy' is irregular: 'bought'." },
+            { id: 11, title: "Past Simple Questions (Did)", example: "When did you visit your friends?", question: "Where ___ you go last Sunday?", options: ["did", "do", "were", "was"], answer: 0, exp: "Questions in Past Simple use the auxiliary verb 'Did'." },
+            { id: 12, title: "Future Simple (Will / Won't)", example: "I will listen to music tomorrow.", question: "Tomorrow, he ___ visit his friends in the village.", options: ["will", "did", "was", "is"], answer: 0, exp: "'Will' is used to express future simple actions." },
+            { id: 13, title: "Present Continuous", example: "She is watching TV in the room now.", question: "Look! A small cat ___ under the table.", options: ["is sleeping", "sleeps", "slept", "was sleeping"], answer: 0, exp: "Action happening right now uses Present Continuous: 'is/are + verb-ing'." },
+            { id: 14, title: "Object Pronouns", example: "I like Peter and Peter likes me.", question: "They like Peter, and Peter likes ___.", options: ["them", "they", "their", "their's"], answer: 0, exp: "Object pronoun for 'they' is 'them'." },
+            { id: 15, title: "Quantifiers (Some / Any / No)", example: "Do you have any apples? / No, I have no apples.", question: "Do you have ___ apples in the kitchen?", options: ["any", "some", "no", "a"], answer: 0, exp: "Use 'any' in questions asking about quantity." },
+            { id: 16, title: "There is / There are", example: "There is a big sofa in the classroom.", question: "___ a big sofa in the living room.", options: ["There is", "There are", "It is", "They are"], answer: 0, exp: "Use 'There is' for singular nouns ('a sofa')." },
+            { id: 17, title: "Prepositions of Place", example: "The cat is under the bedside table.", question: "The book is ___ the table.", options: ["on", "at", "between", "into"], answer: 0, exp: "'On' indicates resting upon a surface." },
+            { id: 18, title: "Fixed Verbs Prepositions", example: "Please listen to the teacher.", question: "The students listened ___ the teacher carefully.", options: ["to", "at", "on", "for"], answer: 0, exp: "The verb 'listen' takes the preposition 'to'." },
+            { id: 19, title: "Small Words (for, only, about)", example: "This nice present is for you.", question: "This special present is ___ you.", options: ["for", "about", "only", "with"], answer: 0, exp: "'For' indicates the intended recipient." },
+            { id: 20, title: "Adverbs of Frequency", example: "I usually go to work by bus.", question: "He ___ goes to work by bus on weekdays.", options: ["usually", "yesterday", "tomorrow", "now"], answer: 0, exp: "'Usually' is an adverb of frequency describing regular actions." },
+            { id: 21, title: "Ordinal Numbers & Time", example: "Monday is the first day of the week.", question: "Monday is the ___ day of the week.", options: ["first", "one", "once", "former"], answer: 0, exp: "Use ordinal numbers ('first', 'second') for order." }
+        ];
+
+        // --- DATA: VOCABULARY FLASHCARDS (FROM ALIAS SHEETS) ---
+        const flashcardData = [
+            // Sheet 1
+            { word: "dry", trans: "сухой", cat: "Adjective", ex: "The soil is very dry under the sun." },
+            { word: "happy", trans: "счастливый", cat: "Adjective", ex: "The happy student smiles." },
+            { word: "busy", trans: "занятой", cat: "Adjective", ex: "She is very busy today." },
+            { word: "clean", trans: "чистый", cat: "Adjective", ex: "Keep your hands clean." },
+            { word: "wet", trans: "мокрый", cat: "Adjective", ex: "His jacket is wet from rain." },
+            { word: "dirty", trans: "грязный", cat: "Adjective", ex: "The boots are dirty." },
+            { word: "expensive", trans: "дорогой", cat: "Adjective", ex: "This diamond is expensive." },
+            { word: "boring", trans: "скучный", cat: "Adjective", ex: "The lesson was boring." },
+            { word: "lazy", trans: "ленивый", cat: "Adjective", ex: "Don't be lazy!" },
+            { word: "soap", trans: "мыло", cat: "Hygiene", ex: "Wash hands with soap." },
+            { word: "towel", trans: "полотенце", cat: "Hygiene", ex: "Use a clean towel." },
+            { word: "toothbrush", trans: "зубная щетка", cat: "Hygiene", ex: "I need a toothbrush." },
+            { word: "mirror", trans: "зеркало", cat: "Home", ex: "Look into the mirror." },
+            { word: "shampoo", trans: "шампунь", cat: "Hygiene", ex: "Wash hair with shampoo." },
+            { word: "drive", trans: "водить (машину)", cat: "Verb", ex: "He can drive a car." },
+            { word: "cook", trans: "готовить", cat: "Verb", ex: "She cooks dinner." },
+            { word: "sing", trans: "петь", cat: "Verb", ex: "We sing songs." },
+            { word: "swim", trans: "плавать", cat: "Verb", ex: "They swim in the pool." },
+            { word: "pizza", trans: "пицца", cat: "Food", ex: "I love delicious pizza." },
+            { word: "apple", trans: "яблоко", cat: "Food", ex: "An apple a day keeps doctors away." },
+            { word: "salad", trans: "салат", cat: "Food", ex: "Eat fresh salad." },
+            { word: "rainy", trans: "дождливый", cat: "Weather", ex: "It is a rainy day." },
+            { word: "snowy", trans: "снежный", cat: "Weather", ex: "It is cold and snowy." },
+            { word: "foggy", trans: "туманный", cat: "Weather", ex: "The morning is foggy." },
+
+            // Sheet 2
+            { word: "cold", trans: "холодный", cat: "Weather/Adj", ex: "The weather was cold." },
+            { word: "hungry", trans: "голодный", cat: "Adjective", ex: "Peter was hungry." },
+            { word: "table", trans: "стол", cat: "Furniture", ex: "Tea is on the table." },
+            { word: "key", trans: "ключ", cat: "Object", ex: "Where is my key?" },
+            { word: "dog", trans: "собака", cat: "Animal", ex: "The dog barks." },
+            { word: "banana", trans: "банан", cat: "Food", ex: "Monkeys love bananas." },
+            { word: "egg", trans: "яйцо", cat: "Food", ex: "He eats an egg for breakfast." },
+            { word: "sun", trans: "солнце", cat: "Nature", ex: "The sun is bright." },
+            { word: "wind", trans: "ветер", cat: "Weather", ex: "Strong wind is blowing." },
+            { word: "read", trans: "читать", cat: "Verb", ex: "She reads a book." },
+            { word: "walk", trans: "гулять / ходить", cat: "Verb", ex: "I walk to school." },
+            { word: "cheese", trans: "сыр", cat: "Food", ex: "Yellow cheese on bread." },
+            { word: "dark", trans: "темный", cat: "Adjective", ex: "It gets dark at night." },
+            { word: "book", trans: "книга", cat: "Object", ex: "Open your books." },
+            { word: "spoon", trans: "ложка", cat: "Kitchen", ex: "Eat soup with a spoon." },
+            { word: "hot", trans: "горячий / жаркий", cat: "Weather/Adj", ex: "Hot tea in winter." },
+            { word: "thirsty", trans: "жаждущий (хочет пить)", cat: "Adjective", ex: "I am very thirsty." },
+            { word: "cookie", trans: "печенье", cat: "Food", ex: "She bakes cookies." },
+            { word: "juice", trans: "сок", cat: "Drink", ex: "Drinking orange juice." },
+            { word: "bread", trans: "хлеб", cat: "Food", ex: "Fresh white bread." },
+            { word: "draw", trans: "рисовать", cat: "Verb", ex: "Children draw pictures." },
+            { word: "cloudy", trans: "облачный", cat: "Weather", ex: "The sky is cloudy." },
+            { word: "old", trans: "старый", cat: "Adjective", ex: "An old suitcase." },
+
+            // Sheet 3
+            { word: "pen", trans: "ручка", cat: "School", ex: "Write with a pen." },
+            { word: "window", trans: "окно", cat: "Home", ex: "Don't open the window!" },
+            { word: "door", trans: "дверь", cat: "Home", ex: "Open the door, please." },
+            { word: "clock", trans: "часы", cat: "Home", ex: "The clock on the wall." },
+            { word: "lamp", trans: "лампа", cat: "Home", ex: "Turn on the lamp." },
+            { word: "socks", trans: "носки", cat: "Clothes", ex: "Warm wool socks." },
+            { word: "jacket", trans: "куртка", cat: "Clothes", ex: "Put on your jacket." },
+            { word: "gloves", trans: "перчатки", cat: "Clothes", ex: "Gloves keep hands warm." },
+            { word: "burger", trans: "бургер", cat: "Food", ex: "Tasty beef burger." },
+            { word: "milk", trans: "молоко", cat: "Drink", ex: "Drink cold milk." },
+            { word: "water", trans: "вода", cat: "Drink", ex: "A bottle of fresh water." },
+            { word: "horse", trans: "лошадь", cat: "Animal", ex: "A black horse runs." },
+            { word: "fish", trans: "рыба", cat: "Animal", ex: "A goldfish in the bowl." },
+            { word: "bird", trans: "птица", cat: "Animal", ex: "A bird sings on a tree." },
+            { word: "cow", trans: "корова", cat: "Animal", ex: "The cow gives milk." },
+            { word: "sheep", trans: "овца", cat: "Animal", ex: "White sheep on grass." },
+            { word: "dance", trans: "танцевать", cat: "Verb", ex: "They dance together." },
+            { word: "jump", trans: "прыгать", cat: "Verb", ex: "Jump high!" },
+            { word: "run", trans: "бежать", cat: "Verb", ex: "Run fast to catch bus." },
+            { word: "write", trans: "писать", cat: "Verb", ex: "Write a letter." },
+
+            // Sheet 4
+            { word: "car", trans: "машина", cat: "Transport", ex: "A red fast car." },
+            { word: "glass", trans: "стакан / стекло", cat: "Kitchen", ex: "A glass of water." },
+            { word: "plate", trans: "тарелка", cat: "Kitchen", ex: "Put food on a plate." },
+            { word: "soup", trans: "суп", cat: "Food", ex: "Hot chicken soup." },
+            { word: "pasta", trans: "паста / макароны", cat: "Food", ex: "Italian pasta with cheese." },
+            { word: "orange", trans: "апельсин", cat: "Food", ex: "Sweet orange fruit." },
+            { word: "ice cream", trans: "мороженое", cat: "Food", ex: "Cold chocolate ice cream." },
+            { word: "rabbit", trans: "кролик", cat: "Animal", ex: "Cute fluffy rabbit." },
+            { word: "monkey", trans: "обезьяна", cat: "Animal", ex: "Monkeys climb trees." },
+            { word: "bear", trans: "медведь", cat: "Animal", ex: "A big brown bear." },
+            { word: "elephant", trans: "слон", cat: "Animal", ex: "An elephant is huge." },
+            { word: "tiger", trans: "тигр", cat: "Animal", ex: "A wild tiger." },
+            { word: "study", trans: "учиться", cat: "Verb", ex: "They studied English." },
+            { word: "play", trans: "играть", cat: "Verb", ex: "Play football in park." },
+            { word: "sleep", trans: "спать", cat: "Verb", ex: "Sleep 8 hours." },
+            { word: "laugh", trans: "смеяться", cat: "Verb", ex: "We laugh at jokes." },
+            { word: "mouth", trans: "рот", cat: "Body", ex: "Open your mouth." },
+            { word: "nose", trans: "нос", cat: "Body", ex: "Touch your nose." },
+            { word: "head", trans: "голова", cat: "Body", ex: "Nod your head." },
+            { word: "pants", trans: "брюки", cat: "Clothes", ex: "Blue denim pants." },
+            { word: "skirt", trans: "юбка", cat: "Clothes", ex: "A red skirt." }
+        ];
+
+        // --- DATA: DICTATION SENTENCES ---
+        const dictationSentences = [
+            { text: "Yesterday was Monday, the {1} day of the week.", missing: ["first"], hint: "Ordinal number for day 1" },
+            { text: "In the morning, Peter was at {1}.", missing: ["home"], hint: "Place where you live" },
+            { text: "He used a towel, soap, and a {1} in the bathroom.", missing: ["toothbrush"], hint: "Hygiene tool for teeth" },
+            { text: "Peter asked his sister, 'Do you have {1} apples?'", missing: ["any"], hint: "Quantifier for questions" },
+            { text: "She said, 'No, I have {1} apples.'", missing: ["no"], hint: "Quantifier for zero quantity" },
+            { text: "Peter bought a new bicycle last week, but he {1} goes to work by bus.", missing: ["usually"], hint: "Adverb of frequency" },
+            { text: "He can drive a car, but he does {1} drive often.", missing: ["not"], hint: "Negative particle" },
+            { text: "The students {1} to him carefully.", missing: ["listened"], hint: "Past Simple of listen" },
+            { text: "Now, Peter is {1} in his living room.", missing: ["sitting"], hint: "Present continuous of sit" },
+            { text: "Tomorrow, he {1} visit his friends in the village.", missing: ["will"], hint: "Future tense modal" }
+        ];
+
+        // --- NAVIGATION STATE ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function addXP(amount) {
+            totalXP += amount;
+            document.getElementById('global-score').innerText = `${totalXP} XP`;
+        }
+
+        // --- MODE 1: GRAMMAR QUIZ LOGIC ---
+        let currentQuizIndex = 0;
+
+        function startGrammarQuiz() {
+            currentQuizIndex = 0;
+            showScreen('grammar-quiz');
+            loadGrammarQuestion();
+        }
+
+        function loadGrammarQuestion() {
+            const q = grammarData[currentQuizIndex];
+            document.getElementById('quiz-topic').innerText = `Topic ${q.id}/21`;
+            document.getElementById('quiz-title').innerText = q.title;
+            document.getElementById('quiz-progress').innerText = `Question ${currentQuizIndex + 1} of ${grammarData.length}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuizIndex + 1) / grammarData.length) * 100}%`;
+
+            document.getElementById('quiz-question').innerText = q.question;
+
+            const optsDiv = document.getElementById('quiz-options');
+            optsDiv.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "quiz-opt-btn bg-slate-700/60 hover:bg-slate-700 border border-slate-600 rounded-xl p-4 text-left font-semibold text-white transition flex items-center justify-between";
+                btn.innerHTML = `<span>${opt}</span><i class="fa-regular fa-circle text-slate-500"></i>`;
+                btn.onclick = () => selectQuizAnswer(idx);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById('quiz-explanation').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+        }
+
+        function selectQuizAnswer(selectedIndex) {
+            const q = grammarData[currentQuizIndex];
+            const buttons = document.querySelectorAll('.quiz-opt-btn');
+
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedIndex === q.answer) {
+                buttons[selectedIndex].className = "bg-emerald-900/60 border-2 border-emerald-500 rounded-xl p-4 text-left font-semibold text-white transition flex items-center justify-between";
+                buttons[selectedIndex].querySelector('i').className = "fa-solid fa-circle-check text-emerald-400 text-lg";
+                addXP(10);
+            } else {
+                buttons[selectedIndex].className = "bg-rose-900/60 border-2 border-rose-500 rounded-xl p-4 text-left font-semibold text-white transition flex items-center justify-between";
+                buttons[selectedIndex].querySelector('i').className = "fa-solid fa-circle-xmark text-rose-400 text-lg";
+
+                // Highlight correct
+                buttons[q.answer].className = "bg-emerald-900/60 border border-emerald-500 rounded-xl p-4 text-left font-semibold text-white transition flex items-center justify-between";
+            }
+
+            const expBox = document.getElementById('quiz-explanation');
+            expBox.className = "p-4 rounded-xl border border-indigo-500/30 bg-indigo-950/40 text-indigo-200 text-sm space-y-1 block";
+            expBox.innerHTML = `<strong>Rule Explanation:</strong> ${q.exp}`;
+
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextGrammarQuestion() {
+            currentQuizIndex++;
+            if (currentQuizIndex < grammarData.length) {
+                loadGrammarQuestion();
+            } else {
+                alert(`🎉 Grammar Quest Completed! Excellent preparation! Your Total Score: ${totalXP} XP`);
+                showScreen('main-menu');
+            }
+        }
+
+        // --- MODE 2: FLASHCARDS LOGIC ---
+        let currentCardIndex = 0;
+        let cardsList = [...flashcardData];
+
+        function startFlashcards() {
+            currentCardIndex = 0;
+            showScreen('flashcards');
+            updateCardDisplay();
+        }
+
+        function updateCardDisplay() {
+            const card = cardsList[currentCardIndex];
+            document.getElementById('flip-card-el').classList.remove('flipped');
+
+            setTimeout(() => {
+                document.getElementById('card-word').innerText = card.word;
+                document.getElementById('card-translation').innerText = card.trans;
+                document.getElementById('card-category').innerText = card.cat;
+                document.getElementById('card-example').innerText = `"${card.ex}"`;
+                document.getElementById('flashcard-counter').innerText = `${currentCardIndex + 1} / ${cardsList.length}`;
+            }, 150);
+        }
+
+        function toggleCardFlip() {
+            document.getElementById('flip-card-el').classList.toggle('flipped');
+        }
+
+        function nextCard() {
+            if (currentCardIndex < cardsList.length - 1) {
+                currentCardIndex++;
+                updateCardDisplay();
+            } else {
+                currentCardIndex = 0;
+                updateCardDisplay();
+            }
+        }
+
+        function prevCard() {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                updateCardDisplay();
+            }
+        }
+
+        function shuffleCards() {
+            cardsList.sort(() => Math.random() - 0.5);
+            currentCardIndex = 0;
+            updateCardDisplay();
+        }
+
+        function speakWord() {
+            const word = cardsList[currentCardIndex].word;
+            const utterance = new SpeechSynthesisUtterance(word);
+            utterance.lang = 'en-US';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // --- MODE 3: DICTATION LOGIC ---
+        let dictationIndex = 0;
+
+        function startDictation() {
+            dictationIndex = 0;
+            showScreen('dictation');
+            loadDictationSentence();
+        }
+
+        function loadDictationSentence() {
+            const s = dictationSentences[dictationIndex];
+            document.getElementById('dictation-step').innerText = `Sentence ${dictationIndex + 1} / ${dictationSentences.length}`;
+            document.getElementById('dictation-hint').innerText = `Hint: ${s.hint}`;
+            
+            // Replace placeholder
+            const formattedSentence = s.text.replace("{1}", "______");
+            document.getElementById('dictation-sentence').innerText = formattedSentence;
+
+            document.getElementById('dictation-input').value = '';
+            document.getElementById('dictation-input').disabled = false;
+            document.getElementById('dictation-feedback').classList.add('hidden');
+            document.getElementById('dictation-next-btn').classList.add('hidden');
+
+            // Speak sentence
+            speakDictationSentence();
+        }
+
+        function speakDictationSentence() {
+            const s = dictationSentences[dictationIndex];
+            // Read full text replacing variable
+            const fullText = s.text.replace("{1}", s.missing[0]);
+            const utterance = new SpeechSynthesisUtterance(fullText);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.85; // Slightly slower for clear dictation
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function checkDictationAnswer() {
+            const inputVal = document.getElementById('dictation-input').value.trim().toLowerCase();
+            const s = dictationSentences[dictationIndex];
+            const targetWord = s.missing[0].toLowerCase();
+
+            const fb = document.getElementById('dictation-feedback');
+            fb.classList.remove('hidden');
+
+            if (inputVal === targetWord) {
+                fb.className = "p-4 rounded-xl border bg-emerald-950/60 border-emerald-500 text-emerald-200 block";
+                fb.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Correct! The sentence is: "<em>${s.text.replace("{1}", s.missing[0])}</em>"`;
+                addXP(15);
+            } else {
+                fb.className = "p-4 rounded-xl border bg-rose-950/60 border-rose-500 text-rose-200 block";
+                fb.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2"></i> Incorrect! Correct word was <strong>"${s.missing[0]}"</strong>.`;
+            }
+
+            document.getElementById('dictation-input').disabled = true;
+            document.getElementById('dictation-next-btn').classList.remove('hidden');
+        }
+
+        function nextDictationSentence() {
+            dictationIndex++;
+            if (dictationIndex < dictationSentences.length) {
+                loadDictationSentence();
+            } else {
+                alert(`✨ Dictation completed! Great job writing accurately! Final XP: ${totalXP}`);
+                showScreen('main-menu');
+            }
+        }
+
+        // --- MODE 4: CHEATSHEET ---
+        function showCheatsheet() {
+            showScreen('cheatsheet');
+            const container = document.getElementById('cheatsheet-list');
+            container.innerHTML = '';
+
+            grammarData.forEach((g) => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800 p-4 rounded-xl border border-slate-700 space-y-1";
+                card.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">Topic ${g.id}</span>
+                    </div>
+                    <h4 class="font-bold text-white text-base">${g.title}</h4>
+                    <p class="text-xs text-slate-300 bg-slate-900/60 p-2 rounded-lg border border-slate-700/50 font-mono">Example: ${g.example}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
